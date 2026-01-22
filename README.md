@@ -20,7 +20,7 @@ This repository contains **two versions** of the application:
 ### 1. Windows Forms (Original)
 Located in the root directory. Requires Windows and .NET Framework 4.7.2.
 
-### 2. Avalonia (Cross-Platform) ⭐
+### 2. Avalonia (Cross-Platform)
 Located in `StockAnalyzer.Avalonia/`. Runs on **macOS, Windows, and Linux**.
 
 | Feature | WinForms | Avalonia |
