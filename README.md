@@ -1,89 +1,92 @@
 # Stock Analyzer
 
-A Windows Forms application for technical stock analysis, featuring candlestick charts, peak/valley detection, wave analysis, and Fibonacci retracement levels.
+A technical stock analysis application featuring candlestick charts, peak/valley detection, wave analysis, and Fibonacci retracement levels.
+
+![Stock Analyzer Screenshot](StockAnalyzerScreenshot.jpeg)
 
 ## Features
 
-- **CSV Data Import**: Load stock data from CSV files in OHLCV format (Date, Open, High, Low, Close, Volume)
+- **CSV Data Import**: Load stock data from CSV files in OHLCV format
 - **Candlestick Charts**: Beautiful candlestick visualization with customizable date ranges
-- **Peak & Valley Detection**: Automatic detection of local price extremes using a configurable margin
+- **Peak & Valley Detection**: Automatic detection of local price extremes
 - **Wave Analysis**: Identifies upward and downward price waves between detected extremes
 - **Fibonacci Retracement**: Displays key Fibonacci levels (0%, 23.6%, 38.2%, 50%, 61.8%, 100%)
-- **Interactive Selection**: Rubber-band selection to manually define wave regions
-- **Price Simulation**: Animate and simulate price movements within a specified range
+- **Interactive Selection**: Click and drag to manually define wave regions
 
-## Screenshots
+## Two Versions
 
-*Coming soon*
+This repository contains **two versions** of the application:
 
-## Requirements
+### 1. Windows Forms (Original)
+Located in the root directory. Requires Windows and .NET Framework 4.7.2.
 
-- Windows OS
-- .NET Framework 4.7.2 or higher
-- Visual Studio 2019 or later (for development)
+### 2. Avalonia (Cross-Platform) ⭐
+Located in `StockAnalyzer.Avalonia/`. Runs on **macOS, Windows, and Linux**.
 
-## Getting Started
+| Feature | WinForms | Avalonia |
+|---------|----------|----------|
+| Platform | Windows only | macOS, Windows, Linux |
+| Framework | .NET Framework 4.7.2 | .NET 8.0 |
+| Charting | System.Windows.Forms.DataVisualization | ScottPlot 5 |
+| Architecture | Forms-based | MVVM |
 
-### Running the Application
+---
+
+## Quick Start (Avalonia - Cross-Platform)
+
+```bash
+cd StockAnalyzer.Avalonia
+dotnet run
+```
+
+## Quick Start (Windows Forms)
 
 1. Open `StockAnalyzer.sln` in Visual Studio
-2. Build the solution (Ctrl+Shift+B)
-3. Run the application (F5)
+2. Build and run (F5)
 
-### Loading Stock Data
+---
 
-1. Click "Load Stock" on the start screen
-2. Select a CSV file containing stock data
-3. Adjust the Start Date and End Date to filter the data range
-4. The candlestick chart will display with detected waves
-
-### CSV Format
-
-Your CSV files should have the following format:
+## CSV Format
 
 ```csv
 Date,Open,High,Low,Close,Volume
 2024-01-02,185.53,186.88,183.62,185.24,28987123
-2024-01-03,184.22,185.01,183.26,184.12,25000000
-...
 ```
 
-- **Date**: YYYY-MM-DD format
-- **Open/High/Low/Close**: Decimal prices
-- **Volume**: Integer trading volume
+## Usage
 
-### Using the Chart
+1. Click **Load CSV** to select a stock data file
+2. Adjust date range and click **Apply Filter**
+3. Select a wave from the **Up Waves** or **Down Waves** list
+4. View **Fibonacci levels** and price **confirmations**
 
-- **Up Waves / Down Waves**: Lists of detected price waves. Click to select and highlight.
-- **Rubber-band Selection**: Click and drag on the chart to manually select a wave region
-- **+/- Buttons**: Manually adjust the end price of the selected wave
-- **% of Range**: Slider to set the simulation range percentage
-- **# of Steps**: Slider to set the number of animation steps
-- **Start/Stop**: Animate through the price simulation
+## Sample Data
+
+A sample CSV file is included at `sample-data/SAMPLE-Day.csv`.
+
+---
 
 ## Technical Overview
 
-### Architecture
-
+### Core Logic (UI-Independent)
 | File | Description |
 |------|-------------|
-| `Candlestick.cs` | OHLCV data model for individual candlesticks |
-| `StockReader.cs` | CSV file parser that creates Candlestick lists |
+| `Candlestick.cs` | OHLCV data model |
+| `StockReader.cs` | CSV file parser |
 | `PeakValley.cs` | Peak/valley detection algorithm |
-| `Wave.cs` | Wave model representing price movement between extremes |
-| `Form_Start.cs` | Entry form for date selection and file loading |
-| `Form_ChartDisplay.cs` | Main chart display with all technical analysis features |
+| `Wave.cs` | Wave model (valley→peak or peak→valley) |
 
-### Key Algorithms
+### Avalonia App Architecture
+```
+StockAnalyzer.Avalonia/
+├── Core/Models/       # Pure C# data models
+├── Core/Services/     # StockAnalysisService (testable)
+├── ViewModels/        # MVVM ViewModels
+└── Views/             # Avalonia XAML UI
+```
 
-- **Peak Detection**: A candlestick is a peak if its High is greater than the High of all neighbors within the margin
-- **Valley Detection**: A candlestick is a valley if its Low is less than the Low of all neighbors within the margin
-- **Wave Classification**: Up waves go from valley to peak; down waves go from peak to valley
+---
 
 ## License
 
 MIT License - See [LICENSE](LICENSE) for details.
-
-## Author
-
-Built as a class project demonstrating Windows Forms development and technical stock analysis concepts.
